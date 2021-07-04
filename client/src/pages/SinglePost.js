@@ -14,6 +14,7 @@ import moment from 'moment';
 import { AuthContext } from '../context/auth';
 import LikeButton from '../components/LikeButton';
 import DeleteButton from '../components/DeleteButton';
+import ToolTipPopup from '../utils/ToolTipPopup';
 
 const SinglePost = ({ match, history }) => {
   const [comment, setComment] = useState('');
@@ -75,18 +76,20 @@ const SinglePost = ({ match, history }) => {
               <hr />
               <Card.Content extra>
                 <LikeButton user={user} post={{ id, likeCount, likes }} />
-                <Button
-                  as='div'
-                  labelPosition='right'
-                  onClick={() => console.log('comment on post')}
-                >
-                  <Button basic color='blue'>
-                    <Icon name='comments' />
+                <ToolTipPopup content='Comment on Post'>
+                  <Button
+                    as='div'
+                    labelPosition='right'
+                    onClick={() => console.log('comment on post')}
+                  >
+                    <Button basic color='blue'>
+                      <Icon name='comments' />
+                    </Button>
+                    <Label basic color='blue' pointing='left'>
+                      {commentCount}
+                    </Label>
                   </Button>
-                  <Label basic color='blue' pointing='left'>
-                    {commentCount}
-                  </Label>
-                </Button>
+                </ToolTipPopup>
                 {user && user.username === username && (
                   <DeleteButton postId={id} callback={deletePostCallback} />
                 )}
