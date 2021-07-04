@@ -9,7 +9,6 @@ import DeleteButton from '../components/DeleteButton';
 
 const SinglePost = ({ match, history }) => {
   const postId = match.params.postId;
-  console.log(`postId`, postId);
 
   const { user } = useContext(AuthContext);
 
@@ -73,6 +72,18 @@ const SinglePost = ({ match, history }) => {
                 )}
               </Card.Content>
             </Card>
+            {comments.map((comment) => (
+              <Card fluid key={comment.id}>
+                <Card.Content>
+                  {user && user.username === comment.user.username && (
+                    <DeleteButton postId={id} commentId={comment.id} />
+                  )}
+                  <Card.Header>{comment.username}</Card.Header>
+                  <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
+                  <Card.Description>{comment.body}</Card.Description>
+                </Card.Content>
+              </Card>
+            ))}
           </Grid.Column>
         </Grid.Row>
       </Grid>
